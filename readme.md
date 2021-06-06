@@ -1,8 +1,8 @@
 Ders projesi kapsamında:
 - [x] ROSIS Pavia University hiperspektral verisi tedarik edilmeli
 - [x] Yer doğrusu haritası kullanarak, etiketli olan piksel vektörlerinin her sınıftan %5'i eğitim verisi olarak alınmalı (geri kalan %95 test verisi olacak)
-- [ ] RBF çekirdekli SVM'in eğitimi için gerekli olan iki parametre (C ve sigma) eğitim verisi üzerinden 10 katlı çapraz doğrulama ile belirlenmeli
-- [ ] RBF çekirdekli SVM sınıflandırıcı yöntemi, belirlenen parametreleri kullanarak, eğitim verisi üzerinde eğitilmeli
+- [x] RBF çekirdekli SVM'in eğitimi için gerekli olan iki parametre (C ve sigma) eğitim verisi üzerinden 10 katlı çapraz doğrulama ile belirlenmeli
+- [x] RBF çekirdekli SVM sınıflandırıcı yöntemi, belirlenen parametreleri kullanarak, eğitim verisi üzerinde eğitilmeli
 - [ ] Eğitilen sınıflandırıcı tüm veriye uygulanarak görsel sonuç elde edilmeli
 - [ ] Sınıflandırıcının test verisine uygulanması ile **overall accuracy**, **average accuracy** ve **kappa** cinsinden sayısal sonuçlar elde edilmeli
 - [ ] Ek olarak, eğitim verisi oranının başarıma etkisini ve çapraz doğrulamanın başarıma etkisini analiz edebilirsiniz.
@@ -12,6 +12,16 @@ Ders projesi kapsamında:
 ![](figure6.png)
 
 ![](figure1.png)
+
+
+```bash
+pip install -r require.txt
+```
+
+
+```bash
+python main.py
+```
 
 
 ```
@@ -51,10 +61,6 @@ data = {
 
 ![](figure3.png)
 
-
-![](figure4.png)
-
-![](figure5.png)
 
 
 ```python

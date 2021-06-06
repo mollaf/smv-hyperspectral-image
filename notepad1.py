@@ -104,9 +104,11 @@ HS, gt = read_data()
 X, y = bit_vectors(HS, gt)
 
 
+# from sklearn.preprocessing import MinMaxScaler
+# scaler = MinMaxScaler(feature_range=(0, 1))
+# X = scaler.fit_transform(X)
 
-
-
+X = X / 8192.0
 
 
 
@@ -123,7 +125,78 @@ non_zeros = np.where(y != 0)
 y = y[non_zeros]
 X = X[non_zeros]
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.95, random_state=42 )
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.95, shuffle=True)
+
+
+
+
+
+
+
+
+
+#%%
+
+from sklearn.svm import SVC
+from sklearn.model_selection import KFold
+from sklearn.metrics import mean_squared_error, mean_absolute_error, accuracy_score
+
+
+
+c_options = [0.0001, 0.001, 0.01, 0.1, 1, 100, 1000]
+gamma_options = [0.0001, 0.001, 0.005, 0.1, 1, 3, 5, 10, 100, 1000]
+
+results = []
+
+for c in c_options: 
+    for gamma in gamma_options:
+        
+        scores = []
+
+        cv = KFold(n_splits=10, shuffle=False)
+        
+        i = 1
+        for train_index, test_index in cv.split(X_train):
+
+            X_train_part, X_test_part, y_train_part, y_test_part = X[train_index], X[test_index], y[train_index], y[test_index]
+
+            svn = SVC(kernel='rbf', C=c, gamma=gamma)
+            
+            clf = svn.fit(X_train_part, y_train_part)
+            
+            y_pred_part = clf.predict(X_test_part)
+            # scores.append(svn.score(X_test_part, y_test_part))
+            current_score = accuracy_score(y_test_part, y_pred_part)
+            scores.append(current_score)
+
+            # print("Fold:", i, "Train Data:",  X_train_part.shape, "Train Labels:", y_train_part.shape, "Test Data:", X_test_part.shape, "Test Labels:", y_test_part.shape, "Score:", current_score)
+            i = i+1
+
+        print(f'c = {c}, gamma = {gamma}, avg. score = {np.array(scores).mean()}')
+        results.append({ 'c': c, 'gamma': gamma, 'score': np.array(scores).mean() })
+        # print('---------------------------------------------------------------')
+
+
+result_sorted = sorted(results, key=lambda x: x['score'], reverse=True)
+
+c = result_sorted[0]['c']
+gamma = result_sorted[0]['gamma']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -137,8 +210,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.95, rand
 
 
 #%%
-
-print(X_train.shape, X_test.shape, y_train.shape, y_test.shape)
 
 
 
