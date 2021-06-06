@@ -52,17 +52,6 @@ data = {
 ![](figure3.png)
 
 
-![](figure4.png)
-
-![](figure5.png)
-
-
-```python
-
-
-```
-
-
 
 
 
